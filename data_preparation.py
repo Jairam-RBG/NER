@@ -27,10 +27,10 @@ class Master_Dataframe:
 
         count_dict = {}
         for tag in final_df['tags']:
-            if tag in count_dict:
-                count_dict[tag] = count_dict[tag] + 1
-            else:
+            if tag not in count_dict:
                 count_dict[tag] = 1
+            else:
+                count_dict[tag] = count_dict[tag] + 1
         Master_Dataframe.master_dataframe(count_dict, final_df)
         return count_dict
 

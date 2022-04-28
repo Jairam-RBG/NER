@@ -64,11 +64,11 @@ class Constructing_Dataframe:
 
         translation_list = []
         for i, j in zip(base_df["is_english"], base_df["tag"]):
-            if i == "yes":
-                translation_list.append(j)
-            else:
+            if i != "yes":
                 words = translation(j, lang_choice)
                 translation_list.append(words)
+            else:
+                translation_list.append(j)
 
         base_df["translated_tag"] = translation_list
         Constructing_Dataframe.creating_dataframe(base_df, lang_choice)

@@ -33,20 +33,23 @@ class Regular_Expression:
                 keyword = ['@' + lang_choice]
                 pattern = re.compile('|'.join(keyword))
                 for line in keyfile:
-                    if pattern.search(line):
-                        temp_data = line.split('>')
-                        res_id, tag_str, res_str = temp_data[0] + '>', temp_data[1], temp_data[2]
-                        re_tag, re_res = "dbpedia.org/property/([\w\W]+)", "[^[a-zA-Z\\'\"@#&,:;=.""]+"
-                        keys = re.findall(re_tag, tag_str)
-                        if keys:
-                            key = keys[0]
-                            values = re.findall(re_res, res_str)
-                            value = " ".join([value for value in values if len(value.strip()) > 0])
-                            if len(value) > 1:
-                                if key in initial_dict:
-                                    initial_dict[key].append(value + "<re_id>" + res_id)
-                                else:
-                                    initial_dict[key] = [value + "<re_id>" + res_id]
+                    if not pattern.search(line):
+                        continue
+                    temp_data = line.split('>')
+                    res_id, tag, res = temp_data[0] + '>', temp_data[1], temp_data[2]
+                    re_tag, re_res = "dbpedia.org/property/([\w\W]+)", "[^[a-zA-Z\\'\"@#&,:;=.""]+"
+                    keys = re.findall(re_tag, tag)
+                    if not keys:
+                        continue
+                    key = keys[0]
+                    values = re.findall(re_res, res)
+                    value = " ".join([value for value in values if len(value.strip()) > 0])
+                    if len(value) <= 1:
+                        continue
+                    if key not in initial_dict:
+                        initial_dict[key] = [value + "<re_id>" + res_id]
+                    else:
+                        initial_dict[key].append(value + "<re_id>" + res_id)
 
                 all_dict.append(initial_dict)
                 Regular_Expression.combining_dictionaries(all_dict, lang_choice)
@@ -63,10 +66,10 @@ class Regular_Expression:
         final_dict = {}
         for dicts in all_dict:
             for key, value in dicts.items():
-                if key in final_dict:
-                    final_dict[key].append(value)
-                else:
+                if key not in final_dict:
                     final_dict[key] = value
+                else:
+                    final_dict[key].append(value)
         print(len(final_dict))
         Constructing_Dataframe.generating_dataframe(final_dict, lang_choice)
         return final_dict, lang_choice
