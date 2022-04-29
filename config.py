@@ -1,7 +1,16 @@
-# language support
-language_choice = {'ta': "Tamil", 'te': "Telugu", 'ml': "Malayalam", 'gu': "Gujarati", 'bn': "Bengali", 'hi': "Hindi",
-                   'mr': "Marathi"}
+# supported languages and language codes
 
+language_choice = {
+    'ta': "Tamil",
+    'te': "Telugu",
+    'ml': "Malayalam",
+    'gu': "Gujarati",
+    'bn': "Bengali",
+    'hi': "Hindi",
+    'mr': "Marathi"
+}
+
+# downloading link
 
 url = {
     "ta": "1EEgrxuJJISPiJxHD-KzLsMUbSkpayA7d",
