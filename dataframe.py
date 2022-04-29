@@ -27,6 +27,7 @@ class Computing_Dataframe:
             value = "&&&".join(str(i) for i in value)
             temp_dict[key] = value
         Computing_Dataframe.initializing_dataframe(temp_dict, lang_code)
+
         return temp_dict
 
     def initializing_dataframe(temp_dict, lang_choice):
@@ -45,6 +46,7 @@ class Computing_Dataframe:
 
         base_df["is_english"] = base_df["tag"].apply(lambda x: "yes" if (x == non_english_words(x)) else "no")
         Computing_Dataframe.tag_translation(base_df, lang_choice)
+
         return base_df
 
     def tag_translation(base_df, lang_choice):
@@ -64,6 +66,7 @@ class Computing_Dataframe:
             encoded_ln = tokenizer(word, return_tensors="pt").to(device)
             generated_tokens = model.generate(**encoded_ln)
             result = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
+
             return result
 
         translation_list = []

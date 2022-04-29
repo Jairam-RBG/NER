@@ -20,6 +20,7 @@ class Data:
             Regular_Expression.extracting_zip(d, lang_code)
         else:
             print("Invalid Language Choice")
+
         return 'done'
 
     def data_download(lang_code):
@@ -48,4 +49,5 @@ class Data:
                 link = f"https://drive.google.com/uc?id={url.get(lang_code)}"
                 output = destination_folder + lang_code + '.zip'
                 file = gdown.download(link, output, quiet=False)
+
         return file_path

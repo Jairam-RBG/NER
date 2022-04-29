@@ -19,6 +19,7 @@ class Master_Dataframe:
         final_df = pd.concat([pd.read_csv(f, delimiter=',') for f in filenames])
         final_df.drop('Unnamed: 0', axis=1, inplace=True)
         Master_Dataframe.tag_counts(final_df)
+
         return final_df
 
     def tag_counts(final_df):
@@ -34,6 +35,7 @@ class Master_Dataframe:
             else:
                 count_dict[tag] = count_dict[tag] + 1
         Master_Dataframe.master_dataframe(count_dict, final_df)
+
         return count_dict
 
     def master_dataframe(count_dict, final_df):
