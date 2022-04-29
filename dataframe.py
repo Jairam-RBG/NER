@@ -11,26 +11,28 @@ device = torch.device("cuda" if use_cuda else "cpu")
 print("Device: ", device)
 
 
-class Constructing_Dataframe:
+class Computing_Dataframe:
 
-    def generating_dataframe(final_dict, lang_choice):
+    def merging_dictionary_values(final_dict, lang_code):
+
         """
         :param final_dict: concatenated dictionary from utility file
-        :param lang_choice: The initial language code passed ['ta','ml',...]
+        :param lang_code: The initial language code passed i.e. ['ta','ml',...]
         :return: A dictionary in which the values are joined using '&&&'
         """
 
-        temp_dict = {}
+        temp_dict = dict()
         for key, value in final_dict.items():
             temp_dict[key] = key
             value = "&&&".join(str(i) for i in value)
             temp_dict[key] = value
-        Constructing_Dataframe.initial_dataframe(temp_dict, lang_choice)
+        Computing_Dataframe.initializing_dataframe(temp_dict, lang_code)
         return temp_dict
 
-    def initial_dataframe(temp_dict, lang_choice):
+    def initializing_dataframe(temp_dict, lang_choice):
+
         """
-        :param lang_choice: The initial language code passed ['ta','ml',...]
+        :param lang_choice: The initial language code passed i.e. ['ta','ml',...]
         :return: The initial dataframe
         """
 
@@ -42,12 +44,13 @@ class Constructing_Dataframe:
             return " ".join(result)
 
         base_df["is_english"] = base_df["tag"].apply(lambda x: "yes" if (x == non_english_words(x)) else "no")
-        Constructing_Dataframe.tag_translation(base_df, lang_choice)
+        Computing_Dataframe.tag_translation(base_df, lang_choice)
         return base_df
 
     def tag_translation(base_df, lang_choice):
+
         """
-        :param lang_choice: The initial language code passed ['ta','ml',...]
+        :param lang_choice: The initial language code passed i.e. ['ta','ml',...]
         :return: updated dataframe after translating the non-english tag name
         """
 
@@ -55,9 +58,10 @@ class Constructing_Dataframe:
         tokenizer = MBart50TokenizerFast.from_pretrained("facebook/mbart-large-50-many-to-one-mmt")
         model.to(device)
 
-        def translation(x, lang):
+        def translation(word, lang_code):
+
             tokenizer.src_lang = lang_choice + "_IN"
-            encoded_ln = tokenizer(x, return_tensors="pt").to(device)
+            encoded_ln = tokenizer(word, return_tensors="pt").to(device)
             generated_tokens = model.generate(**encoded_ln)
             result = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)
             return result
@@ -65,15 +69,16 @@ class Constructing_Dataframe:
         translation_list = []
         for i, j in zip(base_df["is_english"], base_df["tag"]):
             if i != "yes":
-                words = translation(j, lang_choice)
-                translation_list.append(words)
+                translating_words = translation(j, lang_choice)
+                translation_list.append(translating_words)
             else:
                 translation_list.append(j)
 
         base_df["translated_tag"] = translation_list
-        Constructing_Dataframe.creating_dataframe(base_df, lang_choice)
+        Computing_Dataframe.creating_dataframe(base_df, lang_choice)
 
     def creating_dataframe(base_df, lang_choice):
+
         base_df["translated_tag"] = base_df["translated_tag"].str.strip("[''.]")
         tag_res_dict = dict(zip(base_df.translated_tag, base_df.resource))
         tag_res_df = pd.DataFrame.from_dict(tag_res_dict.items())

@@ -7,6 +7,7 @@ class Master_Dataframe:
     """A class representing the master dataframe"""
 
     def merging_csv(files):
+
         """
         :param files: A directory consists all languages csv files.
         :return: Returns cancatenated dataframe.
@@ -21,6 +22,7 @@ class Master_Dataframe:
         return final_df
 
     def tag_counts(final_df):
+
         """
         :return: Dictionary representing the repeated tag names with the count.
         """
@@ -35,6 +37,7 @@ class Master_Dataframe:
         return count_dict
 
     def master_dataframe(count_dict, final_df):
+
         """
         :return: Returns the final master dataframe
         """
@@ -46,6 +49,5 @@ class Master_Dataframe:
         temp_df.columns = ['tags', 'resource']
         temp_df['counts'] = pd.Series(count_df['counts'])
         temp_df.to_csv('master.csv')
-        print(len(temp_df))
 
         return 'success'
