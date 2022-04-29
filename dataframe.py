@@ -16,9 +16,9 @@ class Computing_Dataframe:
     def merging_dictionary_values(final_dict, lang_code):
 
         """
-        :param final_dict: concatenated dictionary from utility file
+        :param final_dict: concatenated dictionary.
         :param lang_code: The initial language code passed i.e. ['ta','ml',...]
-        :return: A dictionary in which the values are joined using '&&&'
+        :return: A dictionary in which the values are joined using '&&&'.
         """
 
         temp_dict = dict()

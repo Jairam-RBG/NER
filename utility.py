@@ -25,8 +25,8 @@ class Regular_Expression:
 
         """
         :param lang_code: The initial language code passed i.e. ['ta','ml',...]
-        :param text_files: Extracted text files returns from the extracting zip function
-        :return: returns list of dictionaries for text files
+        :param text_files: Extracted text files returns from the extracting zip function.
+        :return: returns list of dictionaries for text files.
         """
 
         dict_list = list()
@@ -63,8 +63,8 @@ class Regular_Expression:
 
         """
         :param lang_code: The initial language code passed i.e. ['ta','ml',...]
-        :param dict_list: list of dictionaries returns from the tags_resource_extraction function
-        :return: combines all dictionaries into one single dictionary
+        :param dict_list: list of dictionaries returns from tag_resource_extraction function.
+        :return: combines all dictionaries into one single dictionary.
         """
 
         final_dict = dict()
