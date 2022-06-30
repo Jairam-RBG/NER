@@ -3,7 +3,6 @@ import glob
 
 
 class Master_Dataframe:
-
     """A class representing the master dataframe"""
 
     def merging_csv(files):
@@ -46,7 +45,7 @@ class Master_Dataframe:
 
         count_df = pd.DataFrame.from_dict(count_dict.items())
         count_df.columns = ['tags', 'counts']
-        temp_dict = dict(zip(final_df.tags, final_df.short_resource))
+        temp_dict = dict(zip(final_df.tags, final_df.resource))
         temp_df = pd.DataFrame.from_dict(temp_dict.items())
         temp_df.columns = ['tags', 'resource']
         temp_df['counts'] = pd.Series(count_df['counts'])
